@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
+    compile group: 'knative.runtime', name: 'java-common', version: '1.0.0-SNAPSHOT'
+}
+jar {
+    manifest {
+//        attributes('Main-Class': 'Runtime')
+    }
+    archiveName 'proxy.jar'
+}

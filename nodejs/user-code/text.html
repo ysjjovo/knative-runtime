@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<script type="application/javascript">
+    function postJson() {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === 4){
+                var res = JSON.parse(xhr.responseText);
+                document.getElementById('nname').innerHTML = res.originParams.name;
+                var str = '<ul>';
+                for(var k in res.env){
+                    str+= '<li>'+k + ':' + res.env[k] + '</li>';
+                }
+                str += '</ul>';
+                document.getElementById('env').innerHTML = str;
+            }
+        };
+        xhr.open('POST', '/', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({name: document.getElementById('name').value, type: 'json'}));
+    }
+</script>
+<form action="/" method="post" autocomplete="on">
+    name:<input id='name' type="text" name="name" /><br />
+    <input type="submit" value="post form"/>
+</form>
+<button onclick="postJson()">postJson</button>
+<p><a href="/?type=text&ext=html">text/html</a></p>
+<p><a href="/?type=image&ext=jpeg">image/jpeg</a></p>
+<p><a href="/?type=text&ext=xml">text/xml</a></p>
+<p><a href="/?type=application&ext=doc&subType=msword">application/msword</a></p>
+<p><a href="/?type=application&ext=xls&subType=x-xls">application/x-xls</a></p>
+<p><a href="/?type=application&ext=pdf">application/pdf</a></p>
+<p><a href="/?type=application&ext=pdf&subType=octet-stream">application/octet-stream</a></p>
+<p>welcome <span id="nname"></span></p>
+<div id="env">
+</div>
+</body>
+</html>

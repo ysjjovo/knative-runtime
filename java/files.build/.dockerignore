@@ -1,0 +1,5 @@
+*
+!libs/
+!dep.xml.template
+!init.sh
+!pom.xml.template

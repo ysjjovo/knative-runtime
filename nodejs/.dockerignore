@@ -1,0 +1,7 @@
+*
+!index.js
+!init.sh
+!libvips*
+!package.json
+!sources.list
+!test.js

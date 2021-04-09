@@ -1,0 +1,34 @@
+#!/bin/bash
+# /bin/bash runme java ~/app/knative-runtime/java/user-code/ build user1-1.0.0 knative-runtime-java
+# /bin/bash runme java ~/app/knative-runtime/java/user-code/ test eyJ0eXBlIjoidGV4dCIsImV4dCI6Imh0bWwifQ== knative-runtime-java
+
+# /bin/bash runme quarkus ~/app/knative-runtime/quarkus/user-code/ build user1-1.0.0 knative-runtime-quarkus
+# /bin/bash runme quarkus ~/app/knative-runtime/quarkus/user-code/ test eyJ0eXBlIjoidGV4dCIsImV4dCI6Imh0bWwifQ== knative-runtime-quarkus
+
+# /bin/bash runme nodejs ~/app/knative-runtime/nodejs/user-code/ build user1-1.0.0 knative-runtime-nodejs
+# /bin/bash runme nodejs ~/app/knative-runtime/nodejs/user-code/ test eyJ0eXBlIjoidGV4dCIsImV4dCI6Imh0bWwifQ== knative-runtime-nodejs
+set -euxo pipefail
+runtime_type=$1
+user_code=$2
+package_type=$3
+tag_or_param=$4
+repo=$5
+base_tag=${6:-"1.0.0"}
+
+cd $(dirname $0)
+case $runtime_type in
+"nodejs")
+  repo=${repo:-"knative-runtime-nodejs"}
+  /bin/bash other.sh $user_code $package_type $tag_or_param $repo $base_tag
+  ;;
+"java")
+  repo=${repo:-"knative-runtime-java"}
+  build_image=java-maven:1.0.0
+  /bin/bash java.sh $user_code $package_type $tag_or_param $repo $base_tag $build_image
+  ;;
+"quarkus")
+  repo=${repo:-"knative-runtime-quarkus"}
+  build_image=quarkus-maven:1.0.0
+  /bin/bash quarkus.sh $user_code $package_type $tag_or_param $repo $base_tag $build_image
+  ;;
+esac

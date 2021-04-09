@@ -1,0 +1,8 @@
+<dependency>
+    <groupId>${i}</groupId>
+    <artifactId>${i}</artifactId>
+    <version>${i}</version>
+    <type>jar</type>
+    <scope>system</scope>
+    <systemPath>\${project.basedir}/libs/${jar}</systemPath>
+</dependency>
